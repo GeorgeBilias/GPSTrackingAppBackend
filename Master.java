@@ -269,6 +269,8 @@ public class Master {
 
     public static SynchronizedArrayList<resultInfo> getPersonalStats(String user) {
 
+        // SynchronizedArrayList<resultInfo> user_stats =
+        // results_of_user_routes.get(user);
         SynchronizedArrayList<resultInfo> user_stats = results_of_user_routes.get(user);
 
         return user_stats;
@@ -553,29 +555,29 @@ class ClientHandler implements Runnable {
                 user_avg_distance = total_user_distance / temp5.size();
                 user_avg_elevation = total_user_elevation / temp5.size();
 
-                 System.out.println("User stats: ");
-                 System.out.println("Average Exercise Time: " + user_avg_exercise_time + " sec");
-                 System.out.println("Average Distance Time: " + user_avg_distance + " km");
-                 System.out.println("Average Elevation Time: " + user_avg_elevation + " meters");
+                System.out.println("User stats: ");
+                System.out.println("Average Exercise Time: " + user_avg_exercise_time + " sec");
+                System.out.println("Average Distance Time: " + user_avg_distance + " km");
+                System.out.println("Average Elevation Time: " + user_avg_elevation + " meters");
 
             }
 
             ArrayList<resultInfo> stats = new ArrayList<>();
 
             resultInfo user_total = new resultInfo();
-        
+
             user_total.setTotalDistance(total_user_distance);
             user_total.setTotalTime(total_user_exercise_time);
             user_total.setTotalelevation(total_user_elevation);
 
-            stats.add(user_total);//0 user total
+            stats.add(user_total);// 0 user total
 
             resultInfo user_avg = new resultInfo();
             user_avg.setTotalDistance(user_avg_distance);
             user_avg.setTotalTime(user_avg_exercise_time);
             user_avg.setTotalelevation(user_avg_elevation);
 
-            stats.add(user_avg); //1 user avg
+            stats.add(user_avg); // 1 user avg
 
             double sum_exercise_time = 0;
             double sum_distance = 0;
@@ -614,12 +616,12 @@ class ClientHandler implements Runnable {
 
             if (h.containsKey("user2")) {
                 num += h.get("user2").size();
-                 num2++;
+                num2++;
             }
 
             if (h.containsKey("user3")) {
                 num += h.get("user3").size();
-                 num2++;
+                num2++;
             }
 
             double sum_avg_route_exercise_time = sum_exercise_time / (num);
@@ -629,16 +631,33 @@ class ClientHandler implements Runnable {
             double sum_avg_users_exercise_time = sum_exercise_time / (num2);
             double sum_avg_users_distance = sum_distance / (num2);
             double sum_avg_users_elevation = sum_elevation / (num2);
-             
-             System.out.println("Average All User Stats: \n");
-             System.out.println("Average Exercise Time: " + sum_avg_users_exercise_time + " sec");
-             System.out.println("Average Distance: " + sum_avg_users_distance + " km");
-             System.out.println("Average Elevation: " + sum_avg_users_elevation + " meters");
+            System.out.println(num2);
+            System.out.println("Average All User Stats: \n");
+            System.out.println("Average Exercise Time: " + sum_avg_users_exercise_time + " sec");
+            System.out.println("Average Distance: " + sum_avg_users_distance + " km");
+            System.out.println("Average Elevation: " + sum_avg_users_elevation + " meters");
 
-             System.out.println("Average Route Stats: \n");
-             System.out.println("Average Exercise Time: " + sum_avg_route_exercise_time + " sec");
-             System.out.println("Average Distance: " + sum_avg_route_distance + " km");
-             System.out.println("Average Elevation: " + sum_avg_route_elevation + " meters");
+            System.out.println("Average Route Stats: \n");
+            System.out.println("Average Exercise Time: " + sum_avg_route_exercise_time + " sec");
+            System.out.println("Average Distance: " + sum_avg_route_distance + " km");
+            System.out.println("Average Elevation: " + sum_avg_route_elevation + " meters");
+
+            double percentAvgTimeWork = 0;
+            double percentAvgdistance = 0;
+            double percentAvgTelevation = 0;
+            percentAvgTimeWork = ((total_user_exercise_time - sum_avg_users_exercise_time)
+                    / sum_avg_users_exercise_time)*100;
+            percentAvgdistance = ((total_user_distance - sum_avg_users_distance) / sum_avg_users_distance)*100;
+            percentAvgTelevation = ((total_user_elevation - sum_avg_users_elevation) / sum_avg_users_elevation)*100;
+
+            resultInfo percent = new resultInfo();
+            percent.setTotalTime(percentAvgTimeWork);
+            percent.setTotalDistance(percentAvgdistance);
+            percent.setTotalelevation(percentAvgTelevation);
+
+            System.out.println("time: " + percentAvgTimeWork + " %");
+            System.out.println("distance: " + percentAvgdistance + " %");
+            System.out.println("Elevation: " + percentAvgTelevation + " %");
 
             resultInfo all_users_avg_route = new resultInfo();
             all_users_avg_route.setTotalDistance(sum_avg_route_distance);
@@ -653,6 +672,8 @@ class ClientHandler implements Runnable {
             all_users_avg.setTotalelevation(sum_avg_users_elevation);
 
             stats.add(all_users_avg); // 3 global average users
+
+            stats.add(percent); // 4 percent for each user
 
             outputstream.writeObject(stats);
 
