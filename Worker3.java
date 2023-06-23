@@ -13,7 +13,7 @@ public class Worker3 {
 
         System.out.println("Worker: 3 has started");
 
-        WorkerHandiler wb = new WorkerHandiler(socket);
+        WorkerHandler wb = new WorkerHandler(socket);
         wb.start();
     }
 

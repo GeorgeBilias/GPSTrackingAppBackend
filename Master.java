@@ -209,7 +209,7 @@ public class Master {
      */ //
     // ------------------------------------------------------------------------------------//
 
-    public static synchronized void Reduce(int route, HashMap<Integer, List<resultInfo>> results_of_routes_chunks) {
+    public static void Reduce(int route, HashMap<Integer, List<resultInfo>> results_of_routes_chunks) {
         List<resultInfo> route_chunks_results = results_of_routes_chunks.get(route);
         // initializing the things we want to calculate to 0
         double TotalDistance = 0.0;

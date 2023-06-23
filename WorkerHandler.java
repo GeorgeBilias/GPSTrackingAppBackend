@@ -8,7 +8,7 @@ import java.time.Duration;
 import java.time.Instant;
 import com.example.myapplication.resultInfo;
 
-public class WorkerHandiler extends Thread {
+public class WorkerHandler extends Thread {
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private List<resultInfo> results;
@@ -69,7 +69,7 @@ public class WorkerHandiler extends Thread {
         this.sending = n;
     }
 
-    public WorkerHandiler(Socket socket) {
+    public WorkerHandler(Socket socket) {
         this.socket = socket;
 
     }
@@ -186,14 +186,11 @@ public class WorkerHandiler extends Thread {
     }
 
     @Override
-    public synchronized void run() {
+    public void run() {
         try {
 
             while (true) {
 
-                System.out.println("Worker: " + this.worker_id + " has started");
-
-                // System.out.println("Socket is " + this.socket);
 
                 Deactivate();
                 ObjectInputStream inn = new ObjectInputStream(this.socket.getInputStream());
