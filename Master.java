@@ -506,7 +506,7 @@ class ClientHandler implements Runnable {
 
             // wait for workers
 
-            java.util.concurrent.TimeUnit.SECONDS.sleep(3);
+            java.util.concurrent.TimeUnit.SECONDS.sleep(10S);
             // outputstream.writeObject(Master.get_procesed_rslts2()); // send all the
             // results to the user who is connected
             resultInfo route_stats = null;
